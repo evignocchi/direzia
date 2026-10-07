@@ -8,7 +8,7 @@ Scelte prese in autonomia, con il motivo. Dove una scelta dipende da te (prezzi,
 |---|---|
 | Tetto di 500 € | **IVA inclusa.** Flag `offer.vatIncluded` in `src/data/offer.ts`. |
 | Rimborso | **14 giorni** dalla messa online. `offer.guarantee.days`. |
-| Extra a pagamento | **Nessuno.** Tutto è compreso per un sito vetrina. Quello che può cambiare sono i **tempi**, per progetti oltre il sito vetrina (negozio online, ecc.). Niente prezzi di extra nel sito. |
+| Extra a pagamento | **Nessuno** nel primo anno. Dal secondo anno: dominio + manutenzione, max 100 € l'anno in tutto. Tutto è compreso per un sito vetrina. Quello che può cambiare sono i **tempi**, per progetti oltre il sito vetrina (negozio online, ecc.). Niente prezzi di extra nel sito. |
 | Direzione colore | **Verde abete + zafferano.** |
 
 ## Strategia
@@ -70,7 +70,7 @@ Ogni obiezione del brief ha una risposta esplicita e un posto preciso:
 
 - **Pagamento:** dopo che il cliente ha visto e approvato la bozza (giorno 2), prima di andare online. Toglie il rischio al cliente e rende la garanzia credibile. **DA CONFERMARE.**
 - **Cosa inizia il conteggio dei 3 giorni:** il giorno in cui riceviamo logo, foto e informazioni di base (testi inclusi). Lo scriviamo ovunque, perché è quello che evita liti. **DA CONFERMARE.**
-- **Dal secondo anno:** solo il rinnovo del dominio al registrar (10-20 € l'anno di solito), senza ricarichi. L'hosting non ha costi. **DA VALIDARE** con il registrar e il servizio di hosting che userai.
+- **Dal secondo anno (deciso dal committente):** rinnovo del dominio e manutenzione, **massimo 100 € l'anno in tutto**. Cifra in `offer.yearTwoMax`; il testo mostrato nel sito (`offer.afterYearOne`) ricalca il tetto.
 - **Cosa è incluso:** sito vetrina fino a 5 pagine, dominio .it e hosting del primo anno, testi, SEO base, scheda Google collegata, modulo contatti, formazione di 30 minuti, 30 giorni di assistenza. Elenco in `offer.included`. **DA CONFERMARE** che i 500 € lo coprano con margine.
 - **Garanzia:** condizioni scritte in italiano semplice. Il testo è un segnaposto da validare con un legale. Finché `offer.guarantee.legalReviewed` è `false`, `npm run prelaunch` blocca il lancio.
 

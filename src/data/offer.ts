@@ -3,6 +3,7 @@
  * "3 giorni", "500 €" e "14 giorni" vengono SOLO da qui: cambiali qui e cambiano in tutto il sito (testi, schema.org, one-pager, FAQ).
  */
 const days = 3;
+const yearTwoMax = 100;
 const pages = 5;
 const supportDays = 30;
 const trainingMinutes = 30;
@@ -69,9 +70,11 @@ export const offer = {
     'Sito in più lingue con testi tradotti da noi',
   ],
 
-  /** Dal secondo anno: l'unica spesa possibile, detta chiaramente. DA VALIDARE con il registrar scelto. */
+  /** Dal secondo anno: rinnovo del dominio e manutenzione, tetto massimo annuo in tutto. */
+  yearTwoMax,
+  /** Testo sul secondo anno: costruito da yearTwoMax, non scriverlo a mano altrove. */
   afterYearOne:
-    'Dal secondo anno paghi solo il rinnovo del dominio, direttamente al registrar, senza ricarichi nostri. Di solito tra 10 e 20 € l\'anno. Il resto non ha costi.',
+    `Dal secondo anno ci sono solo il rinnovo del dominio e la manutenzione, massimo ${yearTwoMax} € l'anno in tutto. Nessun'altra voce.`,
 
   timeline: [
     {

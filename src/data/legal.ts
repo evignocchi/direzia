@@ -161,7 +161,7 @@ export const guaranteeTerms: { title: string; intro: string; sections: LegalSect
       title: 'Cosa non è coperto',
       list: [
         'Servizi che non fanno parte del sito vetrina descritto nell\'offerta (per esempio un negozio online), che hanno condizioni scritte a parte.',
-        'Costi pagati a terzi per tua scelta, come il rinnovo del dominio dal secondo anno.',
+        `Rinnovo del dominio e manutenzione dal secondo anno: massimo ${euro(offer.yearTwoMax)} l'anno in tutto.`,
       ],
     },
     {

@@ -37,7 +37,7 @@ import { company, fullAddress } from '../data/company';
 
       <h2>Il prezzo e la garanzia</h2>
       <p>
-        <strong>{priceLabel[0].toUpperCase()}{priceLabel.slice(1)}.</strong> Tutto compreso, nessun extra a pagamento. {offer.payment.when}
+        <strong>{priceLabel[0].toUpperCase()}{priceLabel.slice(1)}.</strong> Tutto compreso, nessun extra a pagamento. {offer.afterYearOne} {offer.payment.when}
         {' '}Se il sito non ti convince, hai {offer.guarantee.days} giorni dalla messa online per chiedere il rimborso di {euro(offer.priceMax)}: scrivi "rimborso" e basta.
       </p>
 
