@@ -8,12 +8,19 @@ export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 
 // I colori si leggono da src/styles/tokens.css (unica fonte di verità).
 const tokens = fs.readFileSync(path.join(root, 'src/styles/tokens.css'), 'utf8');
-const camel = (s) => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+const camel = (s) => s.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
 export const colors = Object.fromEntries(
-  [...tokens.matchAll(/--color-([a-z-]+):\s*(#[0-9a-fA-F]{6})/g)].map(([, n, v]) => [camel(n), v.toUpperCase()]),
+  [...tokens.matchAll(/--color-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6})/g)].map(([, n, v]) => [camel(n), v.toUpperCase()]),
 );
-colors.white = '#FFFFFF';
+colors.white = colors.white ?? '#FFFFFF';
 colors.black = '#000000';
+// Nomi della versione precedente, ancora usati dagli script e dalle pagine non migrate
+Object.assign(colors, {
+  abete: colors.ink, abeteScuro: colors.ink, abeteChiaro: colors.paper2,
+  zafferano: colors.signal, zafferanoScuro: colors.signalDeep,
+  crema: colors.paper, sabbia: colors.paper2, pietra: colors.rule, muschio: colors.graphite, inchiostro: colors.ink,
+  terracotta: colors.errore, terracottaChiaro: colors.erroreChiaro, ok: colors.goInk, okChiaro: colors.goSoft,
+});
 
 const fontCache = {};
 export function loadFont(pkg, file) {
@@ -24,8 +31,8 @@ export function loadFont(pkg, file) {
   }
   return fontCache[key];
 }
-export const displayFont = () => loadFont('@fontsource/young-serif', 'young-serif-latin-400-normal.woff');
-export const bodyFont = (w = 700) => loadFont('@fontsource/atkinson-hyperlegible-next', `atkinson-hyperlegible-next-latin-${w}-normal.woff`);
+export const displayFont = () => loadFont('@fontsource/barlow-condensed', 'barlow-condensed-latin-800-normal.woff');
+export const bodyFont = (w = 600) => loadFont('@fontsource/barlow', `barlow-latin-${w}-normal.woff`);
 
 /** Converte i comandi del glifo (unità del font, asse y verso l'alto) in dati di tracciato SVG. */
 function glyphToSvg(glyph, x, y, scale) {

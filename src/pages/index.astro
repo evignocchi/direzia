@@ -1,15 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/home/Hero.astro';
-import Commitments from '../components/home/Commitments.astro';
-import Problem from '../components/home/Problem.astro';
-import Included from '../components/home/Included.astro';
-import HowItWorks from '../components/home/HowItWorks.astro';
 import Showcase from '../components/home/Showcase.astro';
+import Included from '../components/home/Included.astro';
+import Price from '../components/home/Price.astro';
 import Reviews from '../components/home/Reviews.astro';
-import Pricing from '../components/home/Pricing.astro';
-import Guarantee from '../components/home/Guarantee.astro';
-import About from '../components/home/About.astro';
 import Faq from '../components/home/Faq.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { graph, organizationSchema, serviceSchema, faqSchema, siteUrl } from '../lib/schema';
@@ -20,15 +15,10 @@ const schema = graph(organizationSchema(base), serviceSchema(base), faqSchema())
 
 <Base path="/" schema={schema}>
   <Hero />
-  <Commitments />
-  <Problem />
-  <Included />
-  <HowItWorks />
   <Showcase />
+  <Included />
+  <Price />
   <Reviews />
-  <Pricing />
-  <Guarantee />
-  <About />
   <Faq />
   <ContactSection />
 </Base>

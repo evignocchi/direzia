@@ -8,11 +8,19 @@ test.describe('Home', () => {
     const hero = page.locator('#hero-title').locator('xpath=ancestor::section');
     await expect(hero).toContainText('500 €');
     await expect(hero).toContainText('rimborsiamo');
-    // Barra dei tre impegni
-    const bar = page.getByRole('region', { name: 'I nostri tre impegni' }).or(page.locator('section[aria-label="I nostri tre impegni"]'));
-    await expect(bar).toContainText('3');
-    await expect(bar).toContainText('500 €');
-    await expect(bar).toContainText('Rimborso');
+    // Tabellone: tre giorni e tre fatti
+    const rows = hero.getByRole('listitem');
+    await expect(rows).toHaveCount(4);
+    await expect(hero.getByLabel(/Come funziona/)).toContainText('Chiamata e materiale');
+    await expect(hero.getByLabel(/Come funziona/)).toContainText('Max 500 €');
+    await expect(hero.getByLabel(/Come funziona/)).toContainText('14 giorni');
+    await expect(hero.getByLabel(/Come funziona/)).toContainText('Dopo la bozza');
+  });
+
+  test('il tabellone mostra la data vera di arrivo', async ({ page }) => {
+    await page.goto('/');
+    const arrive = page.locator('[data-day-offset="2"]');
+    await expect(arrive).toHaveText(/^(lun|mar|mer|gio|ven|sab|dom) \d{1,2} [a-z]{3}$/);
   });
 
   test('il pulsante principale porta al modulo di contatto', async ({ page }) => {
@@ -39,19 +47,17 @@ test.describe('Home', () => {
     const wa = await page.locator('[data-cta="whatsapp-hero"]').getAttribute('href');
     expect(wa).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
     expect(decodeURIComponent(wa!)).toContain('sito in 3 giorni');
-    const tel = await page.locator('[data-cta="phone-hero"]').getAttribute('href');
+    const tel = await page.locator('[data-cta="phone-contact"]').getAttribute('href');
     expect(tel).toMatch(/^tel:\+?\d+/);
   });
 
-  test('il filtro dei progetti mostra solo il settore scelto', async ({ page }) => {
-    await page.goto('/');
-    const cards = page.locator('[data-project-card]');
+  test('quattro progetti in vista, gli altri su richiesta', async ({ page }) => {
+    await page.goto('/#progetti');
+    const cards = page.locator('#progetti [data-project-card]');
     await expect(cards).toHaveCount(8);
-    await page.getByRole('button', { name: 'Ristoranti e bar' }).click();
-    await expect(cards.locator('xpath=self::*[not(@hidden)]')).toHaveCount(1);
-    await expect(page.getByRole('button', { name: 'Ristoranti e bar' })).toHaveAttribute('aria-pressed', 'true');
-    await page.getByRole('button', { name: 'Tutti' }).click();
-    await expect(cards.locator('xpath=self::*[not(@hidden)]')).toHaveCount(8);
+    await expect(page.locator('#progetti details[open] [data-project-card]')).toHaveCount(0);
+    await page.getByText('Mostra altri progetti').click();
+    await expect(page.locator('#progetti details[open] [data-project-card]')).toHaveCount(4);
   });
 
   test('le FAQ si aprono da tastiera', async ({ page }) => {

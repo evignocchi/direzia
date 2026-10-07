@@ -79,18 +79,24 @@ export const offer = {
   timeline: [
     {
       day: 1,
+      board: 'Chiamata e materiale',
+      status: 'Partenza',
       title: 'Ci sentiamo e ci mandi il materiale',
       text: `Una chiamata di ${firstCallMinutes} minuti (o una visita da te). Ci racconti l'attività e ci mandi logo, foto e informazioni. Se non hai tempo, partiamo da quello che hai.`,
       you: `Tu: ${firstCallMinutes} minuti e le foto dal telefono.`,
     },
     {
       day: 2,
+      board: 'Bozza da approvare',
+      status: 'In arrivo',
       title: 'Ricevi la bozza e dici cosa cambiare',
       text: 'Ti mandiamo il link alla bozza, già navigabile dal telefono. Ci dici cosa non ti convince e correggiamo in giornata.',
       you: 'Tu: guardi la bozza e ci scrivi cosa cambiare.',
     },
     {
       day: 3,
+      board: 'Sito online sul tuo dominio',
+      status: 'Arrivo',
       title: 'Il sito va online',
       text: `Approvi, il sito va online sul tuo dominio e la scheda Google è collegata. Ti facciamo la formazione di ${trainingMinutes} minuti.`,
       you: 'Tu: dici "va bene" e non c\'è altro da fare.',

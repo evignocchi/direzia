@@ -1,0 +1,33 @@
+---
+import Icon from '../Icon.astro';
+import { copy } from '../../data/copy';
+import { offer, euro } from '../../data/offer';
+const c = copy.home.price;
+---
+
+<section id="prezzi" class="section bg-signal text-ink" aria-labelledby="prezzi-titolo">
+  <div class="wrap grid items-end gap-10 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <h2 id="prezzi-titolo" class="!text-ink">{c.heading}</h2>
+      <p class="mt-4 font-display text-2xl uppercase leading-none">Massimo</p>
+      <p class="font-display leading-[0.82] tabular" style="font-size: clamp(6.5rem, 26vw, 13rem)">{euro(offer.priceMax)}</p>
+      <p class="mt-3 text-lg font-semibold">{c.amountNote}</p>
+    </div>
+    <div>
+      <dl class="divide-y divide-ink/25 border-y border-ink/25">
+        {
+          c.rows.map((r) => (
+            <div class="grid gap-1 py-4 md:grid-cols-[9rem_1fr] md:gap-6">
+              <dt class="font-semibold">{r.label}</dt>
+              <dd>{r.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a href="#contatti" class="btn btn-ink" data-cta="request-price">{copy.cta.primary}<Icon name="arrow" size={22} /></a>
+        <a href="/termini-garanzia" class="inline-flex min-h-11 items-center gap-2 font-semibold underline decoration-2 underline-offset-4">{c.terms}</a>
+      </div>
+    </div>
+  </div>
+</section>

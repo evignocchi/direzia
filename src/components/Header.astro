@@ -5,20 +5,20 @@ import { copy } from '../data/copy';
 import { company, phoneHref } from '../data/company';
 ---
 
-<header class="sticky top-0 z-40 border-b border-pietra bg-crema">
+<header class="on-dark sticky top-0 z-40 border-b border-line bg-ink text-white">
   <div class="wrap flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
     <a href="/" aria-label={`${company.brandName}, vai alla home`} class="shrink-0 rounded">
-      <Logo class="h-8 w-auto md:h-9" />
+      <Logo variant="negative" class="h-8 w-auto md:h-9" />
     </a>
 
     <nav aria-label="Principale" class="hidden items-center gap-7 lg:flex">
       {copy.nav.map((item) => (
-        <a href={`/${item.href}`} class="font-bold text-abete no-underline hover:underline">{item.label}</a>
+        <a href={`/${item.href}`} class="font-semibold text-white no-underline hover:underline">{item.label}</a>
       ))}
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href={phoneHref} class="hidden items-center gap-2 font-bold text-abete no-underline hover:underline md:flex" data-cta="phone-header">
+      <a href={phoneHref} class="hidden items-center gap-2 font-semibold text-white no-underline hover:underline md:flex" data-cta="phone-header">
         <Icon name="phone" size={20} />
         <span class="tabular">{company.phone.display}</span>
       </a>
@@ -26,7 +26,7 @@ import { company, phoneHref } from '../data/company';
       <button
         type="button"
         id="menu-button"
-        class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-abete hover:bg-abete-chiaro lg:hidden"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-cell lg:hidden"
         aria-expanded="false"
         aria-controls="menu"
         aria-label="Apri il menu"
@@ -38,12 +38,12 @@ import { company, phoneHref } from '../data/company';
   </div>
 
   <noscript><style>#menu[hidden]{display:block!important}</style></noscript>
-  <div id="menu" hidden class="border-t border-pietra bg-crema lg:hidden">
+  <div id="menu" hidden class="on-dark border-t border-line bg-ink lg:hidden">
     <nav aria-label="Menu mobile" class="wrap flex flex-col py-3">
       {copy.nav.map((item) => (
-        <a href={`/${item.href}`} class="border-b border-pietra py-3.5 text-lg font-bold text-abete no-underline">{item.label}</a>
+        <a href={`/${item.href}`} class="border-b border-line py-3.5 text-lg font-semibold text-white no-underline">{item.label}</a>
       ))}
-      <a href={phoneHref} class="flex items-center gap-2 py-3.5 text-lg font-bold text-abete no-underline">
+      <a href={phoneHref} class="flex items-center gap-2 py-3.5 text-lg font-semibold text-white no-underline">
         <Icon name="phone" size={22} />
         <span class="tabular">{company.phone.display}</span>
       </a>

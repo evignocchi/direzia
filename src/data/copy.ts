@@ -17,9 +17,8 @@ export const copy = {
   },
 
   nav: [
-    { label: 'Cosa ricevi', href: '#incluso' },
-    { label: 'Come funziona', href: '#come-funziona' },
     { label: 'Progetti', href: '#progetti' },
+    { label: 'Cosa ricevi', href: '#incluso' },
     { label: 'Prezzi', href: '#prezzi' },
     { label: 'Domande', href: '#domande' },
   ],
@@ -32,6 +31,52 @@ export const copy = {
     book: 'Prenota una chiamata di 15 minuti',
     mobileRequest: 'Richiedi',
     whatsappMessage: `Ciao, vorrei un sito in ${daysLabel}. Possiamo sentirci?`,
+  },
+
+  /** Homepage a tabellone: etichette e titoli delle sezioni nuove. */
+  home: {
+    titleLines: ['Il tuo sito', `in ${deliveryDays} giorni`],
+    board: {
+      caption: 'Come funziona: tre giorni, un passaggio al giorno',
+      youLabel: 'Tu',
+      arriveFallback: `Giorno ${deliveryDays}`,
+      facts: [
+        { label: 'Costo', value: `Max ${euro(priceMax)}`, note: offer.vatIncluded ? 'IVA inclusa' : '+ IVA' },
+        { label: 'Rimborso', value: `${guarantee.days} giorni`, note: 'soldi indietro' },
+        { label: 'Paghi', value: 'Dopo la bozza', note: 'solo se ti piace' },
+      ],
+      action: { label: 'Prossima partenza', value: 'Oggi' },
+    },
+    projects: {
+      heading: 'Siti già in viaggio.',
+      intro: 'Un esempio per ogni mestiere. Aprine uno.',
+      more: 'Mostra altri progetti',
+      less: 'Nascondi',
+      demoNote: 'Esempi dimostrativi con nomi di fantasia. I progetti veri li pubblichiamo man mano che li consegniamo.',
+    },
+    included: {
+      heading: 'Tutto compreso.',
+      intro: `Nessun extra a pagamento per un sito vetrina. ${offer.afterYearOne}`,
+      scopeToggle: 'Cosa non rientra',
+    },
+    price: {
+      heading: 'Il prezzo lo sai prima.',
+      amountNote: `${offer.vatIncluded ? 'IVA inclusa' : '+ IVA'}. È il massimo, non una base di partenza.`,
+      rows: [
+        { label: 'Quando paghi', text: offer.payment.when },
+        { label: 'Rimborso', text: `Hai ${guarantee.days} giorni dalla messa online. Scrivi "rimborso" e basta: niente moduli, niente spiegazioni.` },
+        { label: 'Dal secondo anno', text: `Rinnovo del dominio e manutenzione: massimo ${offer.yearTwoMax} € l'anno in tutto. Nessun'altra voce.` },
+      ],
+      terms: 'Condizioni complete della garanzia',
+    },
+    reviews: {
+      heading: 'Parola ai titolari.',
+      more: 'Leggi altre recensioni',
+    },
+    contact: {
+      heading: 'Parti oggi.',
+      text: `Il tuo sito può essere online fra ${deliveryDays} giorni. Una chiamata di 15 minuti e partiamo.`,
+    },
   },
 
   hero: {

@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T14:35:45.443Z",
+  "title": "Design System: Direzia",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Nero Tabellone",
+        "canonical": "#0d0f13",
+        "tonalRamp": [
+          "#1f242d",
+          "#343c4c",
+          "#49546a",
+          "#5d6c88",
+          "#8693ac",
+          "#aab3c5",
+          "#cfd4de",
+          "#edeff3"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Giallo Segnale",
+        "canonical": "#ffd21f",
+        "tonalRamp": [
+          "#4d3d00",
+          "#806600",
+          "#b38f00",
+          "#e6b700",
+          "#ffd633",
+          "#ffe270",
+          "#ffefad",
+          "#fff9e0"
+        ]
+      },
+      "go": {
+        "role": "secondary",
+        "displayName": "Verde Arrivato",
+        "canonical": "#2bd576",
+        "tonalRamp": [
+          "#0d4023",
+          "#156a3b",
+          "#1e9552",
+          "#26c06a",
+          "#55dd91",
+          "#88e7b2",
+          "#bbf2d3",
+          "#e5faee"
+        ]
+      },
+      "cell": {
+        "role": "neutral",
+        "displayName": "Cella",
+        "canonical": "#1e222a",
+        "tonalRamp": [
+          "#20242d",
+          "#353c4a",
+          "#4a5468",
+          "#606c86",
+          "#8893aa",
+          "#acb4c3",
+          "#cfd4dd",
+          "#edeff2"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Foschia",
+        "canonical": "#a6aebb",
+        "tonalRamp": [
+          "#21252b",
+          "#373e48",
+          "#4d5665",
+          "#636f82",
+          "#8b96a7",
+          "#aeb5c1",
+          "#d1d5dc",
+          "#eeeff2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Carta",
+        "canonical": "#f3f4f6",
+        "tonalRamp": [
+          "#21242c",
+          "#373d49",
+          "#4c5566",
+          "#626d83",
+          "#8a94a8",
+          "#adb4c2",
+          "#d0d4dc",
+          "#eeeff2"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Grafite",
+        "canonical": "#565d68",
+        "tonalRamp": [
+          "#23252a",
+          "#3a3e46",
+          "#515762",
+          "#68707e",
+          "#8f97a3",
+          "#b1b6be",
+          "#d2d5da",
+          "#eeeff1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "flap": {
+        "displayName": "Flap",
+        "purpose": "Titolo in celle split-flap."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titoli di sezione."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nomi dei progetti e righe del tabellone."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Testo corrente."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Etichette di colonna."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft",
+        "value": "0 1px 2px rgb(13 15 19 / 0.08), 0 10px 28px -10px rgb(13 15 19 / 0.22)",
+        "purpose": "Recensioni su campo grigio."
+      },
+      {
+        "name": "lift",
+        "value": "0 2px 4px rgb(13 15 19 / 0.1), 0 22px 44px -14px rgb(13 15 19 / 0.35)",
+        "purpose": "Riquadro del modulo sul nero."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Flip delle celle e hover."
+      },
+      {
+        "name": "flap-flip",
+        "value": "500ms, sfalsato di 22ms per cella",
+        "purpose": "Ingresso delle celle del tabellone."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Azione principale su campo chiaro o nero.",
+      "html": "<button class=\"ds-btn-primary\">Richiedi il tuo sito</button>",
+      "css": ".ds-btn-primary{background:#ffd21f;color:#0d0f13;min-height:56px;padding:12.8px 25.6px;border:0;border-radius:8px;font-weight:600;font-size:1.25rem;cursor:pointer;transition:background .2s}.ds-btn-primary:hover{background:#f2bd00}.ds-btn-primary:focus-visible{outline:3px solid #0d0f13;outline-offset:3px}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Azione su campo giallo.",
+      "html": "<button class=\"ds-btn-ink\">Richiedi il tuo sito</button>",
+      "css": ".ds-btn-ink{background:#0d0f13;color:#fff;min-height:56px;padding:12.8px 25.6px;border:0;border-radius:8px;font-weight:600;font-size:1.25rem;cursor:pointer}.ds-btn-ink:hover{background:#14171c}.ds-btn-ink:focus-visible{outline:3px solid #fff;outline-offset:3px}"
+    },
+    {
+      "name": "Flap Cells",
+      "kind": "custom",
+      "refersTo": "flap-cell",
+      "description": "Testo in celle split-flap con linea di cerniera.",
+      "html": "<span class=\"ds-flap\"><i>S</i><i>I</i><i>T</i><i>O</i></span>",
+      "css": ".ds-flap{display:inline-flex;gap:.055em;font:800 3rem/1 \"Barlow Condensed\",sans-serif;text-transform:uppercase}.ds-flap i{position:relative;display:inline-grid;place-items:center;width:.74em;height:1.16em;border-radius:.09em;background:#1e222a;color:#ffd21f;font-style:normal;box-shadow:inset 0 -.05em 0 rgba(0,0,0,.4)}.ds-flap i::after{content:\"\";position:absolute;left:0;right:0;top:50%;height:.04em;background:#0d0f13;transform:translateY(-50%)}"
+    },
+    {
+      "name": "Board Row",
+      "kind": "custom",
+      "refersTo": "board-row",
+      "description": "Riga del tabellone: giorno, azione, stato.",
+      "html": "<div class=\"ds-row\"><b>1</b><span>CHIAMATA E MATERIALE</span><em>PARTENZA</em></div>",
+      "css": ".ds-row{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:#14171c;color:#fff;padding:10px 24px;border-bottom:1px solid #2d323c;font:800 1.75rem/1 \"Barlow Condensed\",sans-serif;text-transform:uppercase}.ds-row b{display:grid;place-items:center;width:36px;height:48px;background:#1e222a}.ds-row em{font-style:normal;color:#ffd21f}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Campo del modulo di contatto.",
+      "html": "<input class=\"ds-input\" placeholder=\"Il tuo nome\">",
+      "css": ".ds-input{width:100%;padding:12.8px 15.2px;border:0;border-radius:8px;background:#f3f4f6;color:#0d0f13;font:inherit;box-shadow:inset 0 0 0 2px #565d68}.ds-input:focus-visible{outline:3px solid #0d0f13;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Il tabellone delle partenze",
+    "overview": "Un solo oggetto, visto una volta: il tabellone di una stazione. Il sito parte oggi e arriva tra tre giorni lavorativi, e la pagina lo dice con righe, celle e stati. Il tabellone è la carta d'identità del mondo, non il contenuto: il testo da leggere resta su campi chiari e comodi.",
+    "keyCharacteristics": [
+      "Lettere condensate maiuscole in celle fisse con linea di cerniera.",
+      "Un solo colore di azione (giallo segnale) e un solo colore di stato (verde).",
+      "Righe e filetti al posto di card.",
+      "Movimento solo come flip a cascata, spento con movimento ridotto.",
+      "Azioni su un piano fermo, mai dentro le celle."
+    ],
+    "rules": [
+      {
+        "name": "The One Action Rule",
+        "body": "Il giallo segnale appartiene alle azioni e al prezzo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Reading Rule",
+        "body": "Il testo da leggere sta sempre fuori dalle celle, su campo piano a contrasto alto.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cell Alphabet Rule",
+        "body": "Le celle contengono solo maiuscole e cifre brevi.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Il tabellone non porta ombre esterne.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do tenere il giallo segnale per azioni e prezzo, e il verde solo per lo stato \"arrivato\".",
+      "Do mettere il testo da leggere su campo piano, fuori dalle celle.",
+      "Do mostrare le date vere dove il JavaScript è disponibile.",
+      "Do etichettare ogni contenuto dimostrativo con \"Esempio dimostrativo\"."
+    ],
+    "donts": [
+      "Don't usare le celle per frasi lunghe o per testo corrente.",
+      "Don't aggiungere gradienti, aloni luminosi o effetti vetro.",
+      "Don't trasformare l'elenco in una griglia di card uguali con icona, titolo e testo.",
+      "Don't far muovere nulla senza prefers-reduced-motion e mai in avanzamento automatico."
+    ]
+  }
+}

@@ -10,3 +10,8 @@ dist/
 playwright-report/
 test-results/
 .DS_Store
+
+# Impeccable: schermate di verifica e comp (locali)
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/

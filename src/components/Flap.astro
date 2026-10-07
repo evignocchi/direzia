@@ -1,0 +1,20 @@
+---
+/**
+ * Testo in celle split-flap. È solo decorazione: aria-hidden, il testo vero sta in un elemento per screen reader
+ * accanto. Ogni cella può avere un indice per l'animazione a cascata (CSS, nessun JavaScript).
+ */
+interface Props {
+  text: string;
+  /** Indice della prima cella, per sfasare l'animazione tra più righe */
+  start?: number;
+  class?: string;
+  white?: boolean;
+}
+const { text, start = 0, class: className = '', white = false } = Astro.props;
+let i = start;
+const cells = [...text.toUpperCase()].map((ch) => (ch === ' ' ? null : { ch, i: i++ }));
+---
+
+<span class:list={['flap', white && 'flap-white', className]} aria-hidden="true">
+  {cells.map((c) => (c ? <span class="flap-cell" style={`--i:${c.i}`}>{c.ch}</span> : <span class="flap-gap" />))}
+</span>

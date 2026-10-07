@@ -4,54 +4,56 @@ import DemoBadge from '../DemoBadge.astro';
 import { copy } from '../../data/copy';
 import { testimonials } from '../../data/testimonials';
 const c = copy.reviews;
-const first = testimonials.slice(0, 6);
-const rest = testimonials.slice(6);
+const h = copy.home.reviews;
+const first = testimonials.slice(0, 3);
+const rest = testimonials.slice(3);
 const hasDemo = testimonials.some((t) => t.demo);
 ---
 
-<section id="recensioni" class="section bg-sabbia" aria-labelledby="recensioni-titolo">
+<section id="recensioni" class="section bg-paper" aria-labelledby="recensioni-titolo">
   <div class="wrap">
-    <div class="reveal max-w-2xl">
-      <h2 id="recensioni-titolo">{c.heading}</h2>
-      <p class="mt-4 text-lg">{c.intro}</p>
-    </div>
+    <h2 id="recensioni-titolo">{h.heading}</h2>
 
-    <div class="mt-10 columns-1 gap-6 md:columns-2 lg:columns-3">
-      {first.map((t) => (
-        <figure class="reveal mb-6 break-inside-avoid rounded-[var(--radius-lg)] bg-crema p-6 shadow-[var(--shadow-soft)]" data-review>
-          <div class="flex items-center justify-between gap-3">
-            <p class="flex text-abete" role="img" aria-label={c.stars(t.stars)}>
-              {[1, 2, 3, 4, 5].map((n) => <Icon name="star" size={18} class={n <= t.stars ? '' : 'text-pietra'} />)}
-            </p>
-            {t.demo && <DemoBadge />}
-          </div>
-          <blockquote class="mt-3 text-inchiostro">{t.text}</blockquote>
-          <figcaption class="mt-4 text-sm"><strong class="text-abete-scuro">{t.author}</strong>, {t.role}<br /><span class="text-muschio">{t.business}</span></figcaption>
-        </figure>
-      ))}
-    </div>
-
-    <details class="group mt-2">
-      <summary class="btn btn-secondary mx-auto w-fit cursor-pointer group-open:hidden">Leggi altre {rest.length} recensioni</summary>
-      <div class="columns-1 gap-6 md:columns-2 lg:columns-3">
-        {rest.map((t) => (
-          <figure class="mb-6 break-inside-avoid rounded-[var(--radius-lg)] bg-crema p-6 shadow-[var(--shadow-soft)]" data-review>
+    <div class="mt-8 grid gap-5 md:grid-cols-3">
+      {
+        first.map((t) => (
+          <figure class="flex flex-col rounded-lg bg-white p-6 shadow-[var(--shadow-soft)]" data-review>
             <div class="flex items-center justify-between gap-3">
-              <p class="flex text-abete" role="img" aria-label={c.stars(t.stars)}>
-                {[1, 2, 3, 4, 5].map((n) => <Icon name="star" size={18} class={n <= t.stars ? '' : 'text-pietra'} />)}
+              <p class="flex text-ink" role="img" aria-label={c.stars(t.stars)}>
+                {[1, 2, 3, 4, 5].map((n) => <Icon name="star" size={20} class={n <= t.stars ? '' : 'text-rule'} />)}
               </p>
               {t.demo && <DemoBadge />}
             </div>
-            <blockquote class="mt-3 text-inchiostro">{t.text}</blockquote>
-            <figcaption class="mt-4 text-sm"><strong class="text-abete-scuro">{t.author}</strong>, {t.role}<br /><span class="text-muschio">{t.business}</span></figcaption>
+            <blockquote class="mt-4 flex-1 text-lg">{t.text}</blockquote>
+            <figcaption class="mt-5 text-sm"><strong>{t.author}</strong>, {t.role}<br /><span class="text-graphite">{t.business}</span></figcaption>
           </figure>
-        ))}
+        ))
+      }
+    </div>
+
+    <details class="group/more mt-6">
+      <summary class="btn btn-secondary w-fit cursor-pointer group-open/more:hidden">{h.more} ({rest.length})</summary>
+      <div class="grid gap-5 md:grid-cols-3">
+        {
+          rest.map((t) => (
+            <figure class="flex flex-col rounded-lg bg-white p-6 shadow-[var(--shadow-soft)]" data-review>
+              <div class="flex items-center justify-between gap-3">
+                <p class="flex text-ink" role="img" aria-label={c.stars(t.stars)}>
+                  {[1, 2, 3, 4, 5].map((n) => <Icon name="star" size={20} class={n <= t.stars ? '' : 'text-rule'} />)}
+                </p>
+                {t.demo && <DemoBadge />}
+              </div>
+              <blockquote class="mt-4 flex-1 text-lg">{t.text}</blockquote>
+              <figcaption class="mt-5 text-sm"><strong>{t.author}</strong>, {t.role}<br /><span class="text-graphite">{t.business}</span></figcaption>
+            </figure>
+          ))
+        }
       </div>
     </details>
 
-    <div class="mt-8 flex flex-col gap-3 text-muschio sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-8 flex flex-col gap-3 text-graphite sm:flex-row sm:items-center sm:justify-between">
       {hasDemo && <p class="max-w-2xl" data-demo-note>{c.demoNote}</p>}
-      <a href="/lascia-una-recensione" class="font-bold text-abete">{c.leaveReview}</a>
+      <a href="/lascia-una-recensione" class="font-semibold text-ink">{c.leaveReview}</a>
     </div>
   </div>
 </section>

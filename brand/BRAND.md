@@ -1,5 +1,7 @@
 # Direzia: identità di marca (Fase 0)
 
+> **In aggiornamento.** La homepage è stata ridisegnata come "tabellone delle partenze" (nero, giallo segnale, Barlow Condensed + Barlow). Il sistema attuale è descritto in `DESIGN.md`; token in `src/styles/tokens.css`. Questo documento descrive ancora la prima identità (verde abete, Young Serif) e verrà riallineato quando il resto del sito segue la nuova direzione.
+
 Direzia non aveva nulla: né nome visivo, né colori, né voce. Questo documento fissa le scelte. I valori operativi vivono in `src/styles/tokens.css` (unica fonte di verità); gli asset si rigenerano con `npm run brand`.
 
 ## 1. Posizionamento
