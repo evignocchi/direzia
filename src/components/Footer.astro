@@ -1,0 +1,48 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { copy } from '../data/copy';
+import { company, fullAddress, phoneHref, emailHref } from '../data/company';
+
+interface Props {
+  showDemoNote?: boolean;
+}
+const { showDemoNote = false } = Astro.props;
+---
+
+<footer class="on-dark bg-abete-scuro text-crema">
+  <div class="wrap py-14 md:py-16">
+    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div>
+        <a href="/" aria-label={`${company.brandName}, vai alla home`} class="inline-block rounded"><Logo variant="negative" class="h-9 w-auto" /></a>
+        <p class="mt-4 max-w-sm text-abete-chiaro">{copy.footer.blurb}</p>
+      </div>
+
+      <div>
+        <h2 class="!text-lg !text-crema">{copy.footer.contactHeading}</h2>
+        <ul class="mt-4 space-y-2.5 text-abete-chiaro">
+          <li><a href={phoneHref} class="inline-flex items-center gap-2 font-bold text-crema"><Icon name="phone" size={18} /><span class="tabular">{company.phone.display}</span></a></li>
+          <li><a href={emailHref} class="inline-flex items-center gap-2 text-crema"><Icon name="mail" size={18} />{company.email}</a></li>
+          <li class="flex gap-2"><Icon name="pin" size={18} class="mt-1 shrink-0" /><span>{fullAddress()}</span></li>
+          <li class="flex gap-2"><Icon name="clock" size={18} class="mt-1 shrink-0" /><span>{company.openingHours}</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="!text-lg !text-crema">{copy.footer.linksHeading}</h2>
+        <ul class="mt-4 space-y-2.5">
+          {copy.footer.links.map((l) => <li><a href={l.href} class="text-crema">{l.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t border-crema/20 pt-6 text-sm text-abete-chiaro">
+      <p>
+        <strong class="text-crema">{company.legalName}</strong> · P.IVA {company.vatId} · C.F. {company.taxCode} · {company.reaNumber} · Capitale sociale {company.shareCapital}
+      </p>
+      <p class="mt-1">Sede legale: {fullAddress()} · PEC: {company.pec}</p>
+      {showDemoNote && <p class="mt-3" data-demo-note>{copy.footer.demoNote}</p>}
+      <p class="mt-3">{copy.footer.rights}</p>
+    </div>
+  </div>
+</footer>

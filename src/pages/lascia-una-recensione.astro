@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { copy } from '../data/copy';
+import { company, isPlaceholder, whatsappHref } from '../data/company';
+const c = copy.reviewPage;
+---
+
+<Base title={`${c.title} | ${company.brandName}`} description={c.intro} noindex>
+  <div class="wrap grid max-w-4xl gap-10 py-14 md:grid-cols-[1.2fr_0.8fr] md:py-20">
+    <div>
+      <h1 class="!text-3xl md:!text-4xl">{c.heading}</h1>
+      <p class="mt-4 text-lg">{c.intro}</p>
+      <ol class="mt-8 space-y-4">
+        {c.steps.map((s, i) => (
+          <li class="flex gap-4">
+            <span class="shape-d inline-flex h-10 w-12 shrink-0 items-center justify-center bg-abete font-bold text-crema" aria-hidden="true">{i + 1}</span>
+            <span class="pt-1.5">{s}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-8">
+        {
+          isPlaceholder(company.googleReviewUrl) ? (
+            <span class="btn btn-secondary cursor-not-allowed opacity-70" aria-disabled="true">Link Google in arrivo: {company.googleReviewUrl}</span>
+          ) : (
+            <a href={company.googleReviewUrl} class="btn btn-primary" rel="noopener" data-cta="google-review">{c.button}<Icon name="external" size={20} /></a>
+          )
+        }
+      </p>
+      <p class="mt-6 text-muschio">{c.honesty}</p>
+    </div>
+    <aside class="self-start rounded-[var(--radius-lg)] bg-abete-chiaro p-6">
+      <h2 class="!text-xl">{c.noteHeading}</h2>
+      <p class="mt-2">{c.noteText}</p>
+      <a href={whatsappHref('Ciao, ho un commento sul mio sito Direzia.')} class="btn btn-secondary mt-4" rel="noopener"><Icon name="whatsapp" size={20} />WhatsApp</a>
+    </aside>
+  </div>
+</Base>

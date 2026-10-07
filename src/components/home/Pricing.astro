@@ -1,0 +1,68 @@
+---
+import Icon from '../Icon.astro';
+import { copy } from '../../data/copy';
+import { offer, euro } from '../../data/offer';
+import { whatsappHref } from '../../data/company';
+const c = copy.pricing;
+---
+
+<section id="prezzi" class="section bg-crema" aria-labelledby="prezzi-titolo">
+  <div class="wrap">
+    <div class="reveal max-w-2xl">
+      <h2 id="prezzi-titolo">{c.heading}</h2>
+      <p class="mt-4 text-lg">{c.intro}</p>
+    </div>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:gap-10">
+      <div class="reveal overflow-hidden rounded-[var(--radius-lg)] bg-sabbia shadow-[var(--shadow-lift)]">
+        <div class="flex flex-col gap-1 border-b border-pietra p-6 md:flex-row md:items-end md:justify-between md:p-8">
+          <div>
+            <h3 class="text-abete-scuro">{c.packageName}</h3>
+            <p class="mt-1 text-muschio">{c.priceCaption}</p>
+          </div>
+          <p class="font-display text-5xl leading-none text-abete md:text-6xl">{euro(offer.priceMax)}</p>
+        </div>
+        <table class="w-full text-left">
+          <caption class="sr-only-x">Cosa è compreso nel prezzo</caption>
+          <thead class="sr-only-x"><tr><th scope="col">Voce</th><th scope="col">Costo</th></tr></thead>
+          <tbody class="divide-y divide-pietra">
+            {c.rows.map((row) => (
+              <tr>
+                <th scope="row" class="px-6 py-3.5 font-normal md:px-8">{row}</th>
+                <td class="whitespace-nowrap px-6 py-3.5 text-right font-bold text-abete md:px-8">
+                  <span class="inline-flex items-center gap-1.5"><Icon name="check" size={18} />{c.includedLabel}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr class="bg-abete text-crema">
+              <th scope="row" class="px-6 py-4 text-lg md:px-8">{c.totalLabel}</th>
+              <td class="px-6 py-4 text-right text-lg font-bold md:px-8"><span class="tabular">max {euro(offer.priceMax)}</span></td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="p-6 text-muschio md:px-8"><strong class="text-abete-scuro">Quando paghi:</strong> {c.priceNote} {offer.payment.methods}</p>
+      </div>
+
+      <div class="space-y-5">
+        <div class="reveal rounded-[var(--radius-lg)] bg-abete-chiaro p-6">
+          <h3 class="text-abete-scuro">{c.noHidden.title}</h3>
+          <p class="mt-2">{c.noHidden.text}</p>
+        </div>
+        <div class="reveal rounded-[var(--radius-lg)] bg-abete-chiaro p-6">
+          <h3 class="text-abete-scuro">{c.noExtras.title}</h3>
+          <p class="mt-2">{c.noExtras.text}</p>
+        </div>
+        <div class="reveal rounded-[var(--radius-lg)] p-6 shadow-[inset_0_0_0_2px_var(--color-pietra)]">
+          <h3 class="text-abete-scuro">{c.custom.title}</h3>
+          <p class="mt-2">{c.custom.text}</p>
+          <a href={whatsappHref('Ciao, mi serve qualcosa in più di un sito vetrina. Possiamo sentirci?')} class="btn btn-secondary mt-4" rel="noopener">
+            <Icon name="whatsapp" size={20} />
+            {c.custom.cta}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

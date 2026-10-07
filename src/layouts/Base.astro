@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import { copy } from '../data/copy';
+import { company } from '../data/company';
+import { hasDemoTestimonials } from '../data/testimonials';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import fontDisplay from '../assets/fonts/young-serif-latin-400-normal.woff2?url';
+import fontBody from '../assets/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2?url';
+import fontBodyBold from '../assets/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2?url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Percorso della pagina per il canonical (default: pagina corrente) */
+  path?: string;
+  noindex?: boolean;
+  schema?: object;
+  /** Nasconde barra CTA mobile, header e footer (pagine tecniche o stampabili) */
+  bare?: boolean;
+  /** Messaggio WhatsApp precompilato (es. per settore) */
+  whatsappMessage?: string;
+}
+
+const {
+  title = copy.site.title,
+  description = copy.site.description,
+  path = Astro.url.pathname,
+  noindex = false,
+  schema,
+  bare = false,
+  whatsappMessage,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://direzia.pages.dev');
+const canonical = new URL(path === '/' ? '/' : path.replace(/\/$/, ''), site).href;
+const ogImage = new URL('/og.png', site).href;
+const showDemoNote = hasDemoTestimonials();
+const env = import.meta.env;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
+    <meta name="theme-color" content="#1a4a37" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content={company.brandName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={copy.site.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preload" href={fontDisplay} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontBody} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontBodyBold} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>
+      // Provenienza della richiesta (venditore o sito), tenuta solo nella scheda del browser.
+      // ?r=nome  → saluto personalizzato; non viene salvato.   utm_*  → fonte della campagna.
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search);
+          var keep = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+          var s = {};
+          try { s = JSON.parse(sessionStorage.getItem('dz-src') || '{}'); } catch (e) {}
+          keep.forEach(function (k) { if (q.get(k)) s[k] = q.get(k).slice(0, 80); });
+          if (q.get('r')) s.r = 1;
+          try { sessionStorage.setItem('dz-src', JSON.stringify(s)); } catch (e) {}
+          window.__dzSrc = s;
+        } catch (e) {}
+      })();
+    </script>
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+    {/*
+      Statistiche senza cookie (facoltative, spente di default).
+      Imposta UNA di queste variabili in .env / Cloudflare Pages per attivarle; nessun banner necessario:
+        PUBLIC_PLAUSIBLE_DOMAIN=tuodominio.it
+        PUBLIC_UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx   (+ PUBLIC_UMAMI_SRC se self-hosted)
+        PUBLIC_CF_ANALYTICS_TOKEN=xxxxxxxx
+      Gli script sono "defer": non bloccano la pagina.
+    */}
+    {env.PUBLIC_PLAUSIBLE_DOMAIN && <script defer data-domain={env.PUBLIC_PLAUSIBLE_DOMAIN} src="https://plausible.io/js/script.js" />}
+    {env.PUBLIC_UMAMI_WEBSITE_ID && <script defer data-website-id={env.PUBLIC_UMAMI_WEBSITE_ID} src={env.PUBLIC_UMAMI_SRC || 'https://cloud.umami.is/script.js'} />}
+    {env.PUBLIC_CF_ANALYTICS_TOKEN && <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: env.PUBLIC_CF_ANALYTICS_TOKEN })} />}
+  </head>
+  <body>
+    <a href="#contenuto" class="sr-only-x focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-zafferano focus:px-4 focus:py-3 focus:font-bold focus:text-abete-scuro">Vai al contenuto</a>
+    {!bare && <Header />}
+    <main id="contenuto">
+      <slot />
+    </main>
+    {!bare && <Footer showDemoNote={showDemoNote} />}
+    {!bare && <MobileBar whatsappMessage={whatsappMessage} />}
+  </body>
+</html>

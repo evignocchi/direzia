@@ -1,0 +1,189 @@
+---
+import { copy } from '../data/copy';
+import { phoneHref, whatsappHref } from '../data/company';
+
+interface Props {
+  /** Settore della pagina da cui arriva la richiesta (campo nascosto) */
+  sector?: string;
+}
+const { sector = '' } = Astro.props;
+const f = copy.contact.fields;
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+
+<form id="contact-form" method="post" action="/api/contact" novalidate class="space-y-5" data-turnstile={turnstileKey ? 'on' : 'off'}>
+  <div class="space-y-5" data-form-fields>
+    <div>
+      <label for="cf-name" class="block font-bold text-abete-scuro">{f.name}</label>
+      <input id="cf-name" name="name" type="text" required autocomplete="name" maxlength="80" class="field" aria-describedby="cf-name-err" />
+      <p id="cf-name-err" class="field-error" hidden></p>
+    </div>
+    <div>
+      <label for="cf-business" class="block font-bold text-abete-scuro">{f.business}</label>
+      <input id="cf-business" name="business" type="text" required autocomplete="organization" maxlength="100" class="field" aria-describedby="cf-business-hint cf-business-err" />
+      <p id="cf-business-hint" class="field-hint">{f.businessHint}</p>
+      <p id="cf-business-err" class="field-error" hidden></p>
+    </div>
+    <div>
+      <label for="cf-contact" class="block font-bold text-abete-scuro">{f.contact}</label>
+      <input id="cf-contact" name="contact" type="text" required inputmode="email" maxlength="120" class="field" aria-describedby="cf-contact-hint cf-contact-err" />
+      <p id="cf-contact-hint" class="field-hint">{f.contactHint}</p>
+      <p id="cf-contact-err" class="field-error" hidden></p>
+    </div>
+    <div>
+      <label for="cf-message" class="block font-bold text-abete-scuro">{f.message}</label>
+      <textarea id="cf-message" name="message" rows="3" maxlength="1000" class="field"></textarea>
+    </div>
+
+    <div>
+      <div class="flex items-start gap-3">
+        <input id="cf-privacy" name="privacy" type="checkbox" value="yes" required class="mt-1.5 h-5 w-5 shrink-0 accent-[var(--color-abete)]" aria-describedby="cf-privacy-err" />
+        <label for="cf-privacy" class="text-muschio">
+          {copy.contact.privacyLabel.split(copy.contact.privacyLink)[0]}<a href="/privacy" target="_blank" rel="noopener" class="font-bold text-abete">{copy.contact.privacyLink}</a>{copy.contact.privacyLabel.split(copy.contact.privacyLink)[1]}
+        </label>
+      </div>
+      <p id="cf-privacy-err" class="field-error" hidden></p>
+    </div>
+
+    <!-- Anti-spam: campo nascosto che le persone non vedono né compilano -->
+    <div class="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+      <label>Non compilare questo campo <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <input type="hidden" name="source" value="inbound" />
+    <input type="hidden" name="page" value="" />
+    <input type="hidden" name="sector" value={sector} />
+    <input type="hidden" name="utm_source" value="" />
+    <input type="hidden" name="utm_medium" value="" />
+    <input type="hidden" name="utm_campaign" value="" />
+    <input type="hidden" name="utm_content" value="" />
+    <input type="hidden" name="utm_term" value="" />
+
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-language="it"></div>}
+
+    <button type="submit" class="btn btn-primary w-full" id="cf-submit">{copy.contact.submit}</button>
+  </div>
+
+  <p id="cf-fallback" hidden class="text-muschio">
+    Puoi anche <a href={phoneHref} class="font-bold text-abete">chiamarci</a> o <a href={whatsappHref(copy.cta.whatsappMessage)} class="font-bold text-abete" rel="noopener">scriverci su WhatsApp</a>.
+  </p>
+  <div id="cf-status" role="status" aria-live="polite" tabindex="-1" class="rounded-[var(--radius-md)] outline-none" hidden></div>
+</form>
+
+<style>
+  .field {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+    padding: 0.8rem 0.95rem;
+    border-radius: var(--radius-md);
+    background: var(--color-crema);
+    color: var(--color-inchiostro);
+    font: inherit;
+    box-shadow: inset 0 0 0 2px var(--color-muschio);
+  }
+  .field:focus-visible {
+    outline: 3px solid var(--color-abete);
+    outline-offset: 2px;
+  }
+  .field[aria-invalid='true'] {
+    box-shadow: inset 0 0 0 2px var(--color-errore);
+  }
+  .field-hint {
+    margin-top: 0.3rem;
+    font-size: var(--text-sm);
+    color: var(--color-muschio);
+  }
+  .field-error {
+    margin-top: 0.3rem;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-errore);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    var T = {
+      required: 'Questo campo è obbligatorio.',
+      contact: 'Inserisci un numero di telefono o un\'email valida.',
+      privacy: 'Per inviare la richiesta devi accettare l\'informativa.',
+      sending: 'Invio in corso…',
+      submit: form.querySelector('#cf-submit').textContent,
+      success: 'Grazie! Abbiamo ricevuto la tua richiesta e ti ricontattiamo entro un giorno lavorativo.',
+      error: 'Qualcosa non ha funzionato. Riprova tra poco, oppure chiamaci o scrivici su WhatsApp.'
+    };
+    var src = window.__dzSrc || {};
+    form.elements.source.value = src.r ? 'venditore' : 'inbound';
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (form.elements[k]) form.elements[k].value = src[k] || ''; });
+    form.elements.page.value = location.pathname;
+
+    // Turnstile (se attivo) si carica solo quando la persona inizia a compilare: nessuno script di terzi all'apertura.
+    if (form.getAttribute('data-turnstile') === 'on') {
+      form.addEventListener('focusin', function load() {
+        form.removeEventListener('focusin', load);
+        var s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        s.async = true; s.defer = true;
+        document.head.appendChild(s);
+      });
+    }
+
+    function setError(id, msg) {
+      var input = form.querySelector('#' + id);
+      var err = form.querySelector('#' + id + '-err');
+      if (!input || !err) return false;
+      err.textContent = msg || '';
+      err.hidden = !msg;
+      if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      return !!msg;
+    }
+    function validContact(v) {
+      v = v.trim();
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return true;
+      return v.replace(/[^\d]/g, '').length >= 6 && /^[\d\s+().-]+$/.test(v);
+    }
+    function validate() {
+      var bad = [];
+      if (!form.elements.name.value.trim()) { setError('cf-name', T.required); bad.push('cf-name'); } else setError('cf-name', '');
+      if (!form.elements.business.value.trim()) { setError('cf-business', T.required); bad.push('cf-business'); } else setError('cf-business', '');
+      var c = form.elements.contact.value;
+      if (!c.trim()) { setError('cf-contact', T.required); bad.push('cf-contact'); }
+      else if (!validContact(c)) { setError('cf-contact', T.contact); bad.push('cf-contact'); }
+      else setError('cf-contact', '');
+      if (!form.elements.privacy.checked) { setError('cf-privacy', T.privacy); bad.push('cf-privacy'); } else setError('cf-privacy', '');
+      return bad;
+    }
+
+    var status = document.getElementById('cf-status');
+    var fields = form.querySelector('[data-form-fields]');
+    var btn = document.getElementById('cf-submit');
+    var fallback = document.getElementById('cf-fallback');
+    function show(kind, msg) {
+      fallback.hidden = kind === 'ok';
+      status.hidden = false;
+      status.textContent = msg;
+      status.className = 'rounded-[var(--radius-md)] p-4 font-bold outline-none ' + (kind === 'ok' ? 'bg-ok-chiaro text-ok' : 'bg-errore-chiaro text-errore');
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      status.hidden = true;
+      fallback.hidden = true;
+      var bad = validate();
+      if (bad.length) { form.querySelector('#' + bad[0]).focus(); return; }
+      btn.disabled = true; btn.textContent = T.sending;
+      var data = {};
+      new FormData(form).forEach(function (v, k) { data[k] = v; });
+      try {
+        var r = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
+        var j = {};
+        try { j = await r.json(); } catch (err) { /* risposta senza JSON */ }
+        if (r.ok && j.ok !== false) { fields.hidden = true; show('ok', T.success); status.focus(); return; }
+      } catch (err) { /* rete assente */ }
+      show('error', T.error); btn.disabled = false; btn.textContent = T.submit;
+    });
+  })();
+</script>

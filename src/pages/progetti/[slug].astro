@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import DemoSite from '../../components/DemoSite.astro';
+import DemoBadge from '../../components/DemoBadge.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { copy } from '../../data/copy';
+import { projects, projectCategoryLabel } from '../../data/projects';
+import { company } from '../../data/company';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project: p } = Astro.props;
+const c = copy.showcase;
+const title = `${p.name}: ${p.kind.toLowerCase()}, sito online in ${c.daysLabel(p.deliveryDays)}`;
+const description = `${p.result}. Un caso di ${projectCategoryLabel(p.category).toLowerCase()} realizzato da ${company.brandName}.`;
+---
+
+<Base title={`${title} | ${company.brandName}`} description={description} noindex={p.demo}>
+  <article>
+    <div class="bg-sabbia">
+      <div class="wrap grid items-center gap-10 py-10 md:grid-cols-[1fr_1.1fr] md:py-16">
+        <div>
+          <a href="/#progetti" class="inline-flex items-center gap-2 font-bold text-abete"><Icon name="arrow" size={18} class="rotate-180" />{c.caseBack}</a>
+          <p class="mt-6 font-bold text-terracotta">{projectCategoryLabel(p.category)}</p>
+          <h1 class="mt-1 !text-3xl md:!text-4xl">{p.name}</h1>
+          <p class="mt-3 text-lg">{p.kind}</p>
+          <p class="mt-4 flex flex-wrap items-center gap-3">
+            <span class="rounded-full bg-abete px-4 py-1.5 font-bold text-crema">Online in {c.daysLabel(p.deliveryDays)}</span>
+            {p.demo && <DemoBadge />}
+          </p>
+          <p class="mt-5 text-xl font-bold text-abete">{p.result}</p>
+        </div>
+        <DemoSite frame="browser" site={p.site} name={p.name} label={`Anteprima del sito di ${p.name}`} />
+      </div>
+    </div>
+
+    <div class="wrap grid gap-10 py-14 md:grid-cols-[1fr_1fr_1fr] md:gap-12 md:py-20">
+      <section>
+        <h2 class="!text-2xl">{c.caseSituation}</h2>
+        <p class="mt-3">{p.situation}</p>
+      </section>
+      <section>
+        <h2 class="!text-2xl">{c.caseDone}</h2>
+        <ul class="mt-3 space-y-3">
+          {p.whatWeDid.map((w) => <li class="flex gap-3"><Icon name="check" size={22} class="mt-0.5 shrink-0 text-abete" />{w}</li>)}
+        </ul>
+      </section>
+      <section>
+        <h2 class="!text-2xl">{c.caseResult}</h2>
+        <p class="mt-3">{p.resultLong}</p>
+        {
+          p.quote && (
+            <figure class="mt-5 rounded-[var(--radius-md)] bg-abete-chiaro p-5">
+              <blockquote class="text-abete-scuro">“{p.quote.text}”</blockquote>
+              <figcaption class="mt-2 text-sm font-bold text-abete">{p.quote.who}</figcaption>
+            </figure>
+          )
+        }
+      </section>
+    </div>
+
+    {p.demo && <p class="wrap pb-10 text-muschio" data-demo-note>{c.demoNote}</p>}
+  </article>
+  <ContactSection />
+</Base>

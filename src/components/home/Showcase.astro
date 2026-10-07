@@ -1,0 +1,73 @@
+---
+import ProjectCard from '../ProjectCard.astro';
+import { copy } from '../../data/copy';
+import { projects, categories } from '../../data/projects';
+const c = copy.showcase;
+const used = categories.filter((cat) => projects.some((p) => p.category === cat.id));
+const hasDemo = projects.some((p) => p.demo);
+---
+
+<section id="progetti" class="section bg-crema" aria-labelledby="progetti-titolo">
+  <div class="wrap">
+    <div class="reveal max-w-2xl">
+      <h2 id="progetti-titolo">{c.heading}</h2>
+      <p class="mt-4 text-lg">{c.intro}</p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-2" role="group" aria-label={c.filterLabel} id="project-filters">
+      <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">{c.all}</button>
+      {used.map((cat) => <button type="button" class="filter-chip" data-filter={cat.id} aria-pressed="false">{cat.label}</button>)}
+    </div>
+    <p class="sr-only-x" role="status" id="project-count" aria-live="polite"></p>
+
+    <div class="mt-8 grid gap-x-5 gap-y-10 sm:grid-cols-2 xl:grid-cols-4" id="project-grid">
+      {projects.map((p) => <ProjectCard project={p} />)}
+    </div>
+
+    {hasDemo && <p class="mt-10 max-w-2xl text-muschio" data-demo-note>{c.demoNote}</p>}
+  </div>
+</section>
+
+<style>
+  .filter-chip {
+    min-height: 2.75rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-abete);
+    font-weight: 700;
+    box-shadow: inset 0 0 0 2px var(--color-pietra);
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-out);
+  }
+  .filter-chip:hover {
+    background: var(--color-abete-chiaro);
+  }
+  .filter-chip[aria-pressed='true'] {
+    background: var(--color-abete);
+    color: var(--color-crema);
+    box-shadow: none;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById('project-filters');
+    var grid = document.getElementById('project-grid');
+    var status = document.getElementById('project-count');
+    if (!bar || !grid) return;
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+      var f = btn.getAttribute('data-filter');
+      bar.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      var shown = 0;
+      grid.querySelectorAll('[data-project-card]').forEach(function (card) {
+        var ok = f === 'all' || card.getAttribute('data-category') === f;
+        card.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (status) status.textContent = shown + (shown === 1 ? ' progetto mostrato' : ' progetti mostrati');
+    });
+  })();
+</script>

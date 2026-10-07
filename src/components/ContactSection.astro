@@ -1,0 +1,49 @@
+---
+import Icon from './Icon.astro';
+import ContactForm from './ContactForm.astro';
+import { copy } from '../data/copy';
+import { company, phoneHref, whatsappHref } from '../data/company';
+
+interface Props {
+  sector?: string;
+  whatsappMessage?: string;
+}
+const { sector = '', whatsappMessage = copy.cta.whatsappMessage } = Astro.props;
+const c = copy.contact;
+const hasBooking = !!company.bookingUrl;
+---
+
+<section id="contatti" class="on-dark pattern-frecce section bg-abete text-crema" aria-labelledby="contatti-titolo">
+  <div class="wrap grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <div class="reveal">
+      <h2 id="contatti-titolo" class="!text-crema">{c.finalHeading}</h2>
+      <p class="mt-4 max-w-lg text-lg text-abete-chiaro">{c.finalText}</p>
+
+      <p class="mt-8 font-bold text-crema">{c.alternativesHeading}</p>
+      <div class="mt-3 flex flex-col gap-3 sm:max-w-sm">
+        <a href={whatsappHref(whatsappMessage)} class="btn btn-secondary-dark" rel="noopener" data-cta="whatsapp-contact">
+          <Icon name="whatsapp" size={20} />
+          {copy.cta.whatsapp}
+        </a>
+        <a href={phoneHref} class="btn btn-secondary-dark" data-cta="phone-contact">
+          <Icon name="phone" size={20} />
+          <span>{copy.cta.callLong} <span class="tabular">{company.phone.display}</span></span>
+        </a>
+        {
+          hasBooking && (
+            <a href={company.bookingUrl} class="btn btn-secondary-dark" rel="noopener" data-cta="book-contact">
+              <Icon name="clock" size={20} />
+              {copy.cta.book}
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="on-light reveal rounded-[var(--radius-lg)] bg-crema p-6 text-inchiostro shadow-[var(--shadow-lift)] md:p-8">
+      <h3 class="text-abete-scuro">{c.heading}</h3>
+      <p class="mb-6 mt-2 text-muschio">{c.intro}</p>
+      <ContactForm sector={sector} />
+    </div>
+  </div>
+</section>

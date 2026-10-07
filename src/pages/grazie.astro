@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { copy } from '../data/copy';
+import { company } from '../data/company';
+---
+
+<Base title={`Richiesta ricevuta | ${company.brandName}`} noindex>
+  <div class="wrap max-w-2xl py-20">
+    <h1 class="!text-3xl md:!text-4xl">Richiesta ricevuta.</h1>
+    <p class="mt-4 text-lg">{copy.contact.success}</p>
+    <p class="mt-8"><a href="/" class="btn btn-primary">Torna alla home</a></p>
+  </div>
+</Base>

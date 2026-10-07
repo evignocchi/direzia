@@ -1,0 +1,253 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* Font ospitati da noi, solo glifi latini. font-display: swap per non bloccare il testo. */
+@font-face {
+  font-family: 'Young Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/young-serif-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2') format('woff2');
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+    background: var(--color-crema);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    color: var(--color-inchiostro);
+    background: var(--color-crema);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: var(--leading-snug);
+    text-wrap: balance;
+    color: var(--color-abete-scuro);
+  }
+  h1 {
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+  }
+  h2 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+  h3 {
+    font-size: var(--text-xl);
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1.5px;
+  }
+  ::selection {
+    background: var(--color-zafferano);
+    color: var(--color-abete-scuro);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-abete);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-zafferano);
+  }
+  .on-light :focus-visible,
+  .on-light:focus-visible {
+    outline-color: var(--color-abete);
+  }
+  input,
+  textarea {
+    caret-color: var(--color-abete);
+  }
+  /* Tabelle numeriche allineate */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 2rem;
+    }
+  }
+  .section {
+    padding-block: 4rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 6.5rem;
+    }
+  }
+
+  /* Pulsanti. Il giallo zafferano è solo del pulsante principale. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: var(--text-base);
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out);
+  }
+  .btn svg {
+    flex: none;
+  }
+  .btn-primary {
+    background: var(--color-zafferano);
+    color: var(--color-abete-scuro);
+    box-shadow: var(--shadow-soft);
+  }
+  .btn-primary:hover {
+    background: var(--color-zafferano-scuro);
+    box-shadow: var(--shadow-lift);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-abete);
+    box-shadow: inset 0 0 0 2px var(--color-abete);
+  }
+  .btn-secondary:hover {
+    background: var(--color-abete-chiaro);
+  }
+  .btn-secondary-dark {
+    background: transparent;
+    color: var(--color-crema);
+    box-shadow: inset 0 0 0 2px var(--color-crema);
+  }
+  .btn-secondary-dark:hover {
+    background: rgb(251 247 238 / 0.12);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+  }
+
+  /* Forma della "D" del logo: spigoli stretti a sinistra, curva a destra */
+  .shape-d {
+    border-radius: 0.9rem 999px 999px 0.9rem;
+  }
+
+  /* Trama di piccole frecce (stessa del brand), solo su fondi verdi */
+  .pattern-frecce {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cpath fill='%23fbf7ee' fill-opacity='.07' d='M20 44h8v-5l9 7-9 7v-5h-8z'/%3E%3C/svg%3E");
+    background-size: 96px 96px;
+  }
+
+  /* Etichetta "Esempio dimostrativo" */
+  .badge-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-attenzione-chiaro);
+    color: var(--color-attenzione);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  /* Testo per soli screen reader */
+  .sr-only-x {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Comparsa leggera allo scroll: solo dove il browser la supporta, mai con movimento ridotto */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal both linear;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        translate: 0 1.25rem;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+  }
+}
+
+/* Barra CTA fissa su telefono: spazio in fondo alla pagina per non coprire il footer */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media print {
+  body {
+    padding-bottom: 0;
+  }
+}

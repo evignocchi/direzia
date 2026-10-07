@@ -1,0 +1,18 @@
+---
+/** Logo orizzontale: il file sorgente è brand/logo (generato da `npm run brand`), nessuna copia a mano. */
+import color from '../../brand/logo/direzia-orizzontale.svg?raw';
+import negative from '../../brand/logo/direzia-negativo.svg?raw';
+
+interface Props {
+  variant?: 'color' | 'negative';
+  class?: string;
+}
+const { variant = 'color', class: className = 'h-9 w-auto' } = Astro.props;
+// Toglie larghezza/altezza fissi: la misura la decide la classe CSS.
+const svg = (variant === 'negative' ? negative : color)
+  .replace(/ width="[\d.]+" height="[\d.]+"/, '')
+  .replace('<svg ', `<svg class="${className}" `)
+  .trim();
+---
+
+<Fragment set:html={svg} />

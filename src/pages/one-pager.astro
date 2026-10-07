@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { copy } from '../data/copy';
+import { offer, euro, priceLabel } from '../data/offer';
+import { company, fullAddress } from '../data/company';
+---
+
+<Base title={`Scheda dell'offerta | ${company.brandName}`} description={copy.site.description} noindex bare>
+  <div class="no-print wrap flex flex-wrap items-center justify-between gap-3 py-4">
+    <a href="/" class="font-bold text-abete">← Torna al sito</a>
+    <button type="button" id="print-btn" class="btn btn-primary !min-h-11">Stampa o salva in PDF</button>
+  </div>
+
+  <article class="sheet mx-auto bg-crema">
+    <h1 class="sr-only-x">{offer.name}: scheda dell'offerta</h1>
+    <header class="sheet-head">
+      <img src="/brand/onepager-header.svg" alt={`${company.brandName}: ${offer.name}`} width="1240" height="260" />
+    </header>
+
+    <div class="sheet-body">
+      <p class="lead">{copy.hero.sub}</p>
+
+      <ul class="numbers">
+        {copy.commitments.map((c) => <li><strong>{c.value}{c.unit ? ` ${c.unit}` : ''}</strong><span>{c.text}</span></li>)}
+      </ul>
+
+      <h2>Cosa ricevi</h2>
+      <ul class="checks two-col">
+        {offer.included.map((i) => <li><Icon name="check" size={16} /><span><strong>{i.title}.</strong> {i.text}</span></li>)}
+      </ul>
+
+      <h2>Come funziona</h2>
+      <ol class="steps">
+        {offer.timeline.map((s) => <li><strong>Giorno {s.day}: {s.title}.</strong> {s.text}</li>)}
+      </ol>
+
+      <h2>Il prezzo e la garanzia</h2>
+      <p>
+        <strong>{priceLabel[0].toUpperCase()}{priceLabel.slice(1)}.</strong> Tutto compreso, nessun extra a pagamento. {offer.payment.when}
+        {' '}Se il sito non ti convince, hai {offer.guarantee.days} giorni dalla messa online per chiedere il rimborso di {euro(offer.priceMax)}: scrivi "rimborso" e basta.
+      </p>
+
+      <footer class="sheet-foot">
+        <div>
+          <strong>{company.brandName}</strong><br />
+          {company.legalName}<br />
+          {fullAddress()}<br />
+          P.IVA {company.vatId}
+        </div>
+        <div>
+          <strong>Parliamone</strong><br />
+          Tel. {company.phone.display}<br />
+          {company.email}<br />
+          {company.openingHours}
+        </div>
+      </footer>
+    </div>
+  </article>
+
+  <script is:inline>
+    document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
+  </script>
+
+  <style is:global>
+    .sheet { max-width: 52rem; box-shadow: var(--shadow-soft); }
+    .sheet-head img { display: block; width: 100%; height: auto; }
+    .sheet-body { padding: 1.5rem 1.5rem 2rem; font-size: 0.95rem; line-height: 1.5; }
+    .sheet-body .lead { font-size: 1.15rem; font-weight: 700; color: var(--color-abete); }
+    .sheet-body h2 { font-size: 1.4rem; margin: 1.6rem 0 0.6rem; border-bottom: 2px solid var(--color-abete); padding-bottom: 0.25rem; }
+    .numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1rem; padding: 0; list-style: none; }
+    .numbers li { background: var(--color-abete-chiaro); border-radius: 0.6rem; padding: 0.7rem 0.8rem; }
+    .numbers strong { display: block; font-family: var(--font-display); font-size: 1.5rem; color: var(--color-abete-scuro); line-height: 1.1; }
+    .numbers span { font-size: 0.85rem; }
+    .checks { list-style: none; padding: 0; margin: 0; }
+    .checks li { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; break-inside: avoid; }
+    .checks svg { flex: none; margin-top: 0.2rem; color: var(--color-abete); }
+    .two-col { columns: 2; column-gap: 1.5rem; }
+    .steps { padding-left: 1.2rem; }
+    .steps li { margin-bottom: 0.4rem; }
+    .sheet-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.6rem; padding-top: 1rem; border-top: 2px solid var(--color-abete); }
+    @media (max-width: 640px) { .two-col { columns: 1; } .numbers { grid-template-columns: 1fr; } }
+
+    @page { size: A4; margin: 0; }
+    @media print {
+      .no-print { display: none !important; }
+      html, body { background: #fff !important; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .sheet { max-width: none; width: 100%; box-shadow: none; background: #fff; }
+      .sheet-body { padding: 8mm 12mm 10mm; font-size: 9.6pt; }
+      .sheet-body h2 { font-size: 13pt; margin-top: 4.5mm; }
+      .sheet-body .lead { font-size: 11pt; }
+      .numbers strong { font-size: 14pt; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</Base>

@@ -1,0 +1,10 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { guaranteeTerms } from '../data/legal';
+import { offer } from '../data/offer';
+const notice = offer.guarantee.legalReviewed
+  ? undefined
+  : '[VALIDAZIONE LEGALE PENDENTE] Questo testo è una bozza da far verificare a un legale prima del lancio. Imposta offer.guarantee.legalReviewed su true quando è approvato.';
+---
+
+<LegalPage {...guaranteeTerms} notice={notice} />

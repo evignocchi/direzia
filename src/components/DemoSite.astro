@@ -1,0 +1,200 @@
+---
+/**
+ * Mockup di un sito d'esempio, disegnato in HTML/CSS/SVG. Tutte le misure sono in unità `cqw`
+ * (1% della larghezza del contenitore): lo stesso markup si ingrandisce e si rimpicciolisce senza JavaScript.
+ * È solo decorazione: nascosto agli screen reader (la descrizione sta nel `label`) e non cliccabile.
+ */
+import type { Project } from '../data/projects';
+import { art } from './demo/art';
+
+interface Props {
+  site: Project['site'];
+  name: string;
+  /** browser = finestra del computer, phone = telefono */
+  frame?: 'browser' | 'phone';
+  label: string;
+  class?: string;
+}
+const { site, name, frame = 'browser', label, class: className = '' } = Astro.props;
+const { colors } = site;
+const vars = `--dp:${colors.primary};--da:${colors.accent};--ds:${colors.soft};--di:${colors.ink};--db:${colors.bg}`;
+---
+
+<figure class:list={['demo-frame', `demo-${frame}`, className]} role="img" aria-label={label}>
+  {
+    frame === 'browser' && (
+      <div class="demo-bar" aria-hidden="true">
+        <i /><i /><i />
+        <span>tuaattivita.it</span>
+      </div>
+    )
+  }
+  <div class="demo-screen">
+  {frame === 'phone' && <div class="demo-notch" aria-hidden="true" />}
+  <div class="demo" style={vars} aria-hidden="true" inert>
+    <div class="d-nav">
+      <b>{name}</b>
+      <span class="d-links">{site.nav.map((n) => <i>{n}</i>)}</span>
+      <span class="d-btn">{site.nav[site.nav.length - 1]}</span>
+    </div>
+    <div class="d-hero">
+      <div class="d-copy">
+        <span class="d-h">{site.headline}</span>
+        <span class="d-p">{site.sub}</span>
+        <span class="d-btn d-btn-a">{site.cta}</span>
+      </div>
+      <svg class="d-art" viewBox="0 0 200 160" set:html={art[site.art]} />
+    </div>
+    <div class="d-blocks">
+      {
+        site.blocks.map((b) => (
+          <span class="d-block">
+            <b>{b.title}</b>
+            <i>{b.text}</i>
+          </span>
+        ))
+      }
+    </div>
+    <div class="d-foot">{site.footer}</div>
+  </div>
+  </div>
+</figure>
+
+<style is:global>
+  .demo-frame {
+    margin: 0;
+    background: var(--color-crema);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+  .demo-browser {
+    border-radius: 0.9rem;
+    box-shadow:
+      0 0 0 1px var(--color-pietra),
+      var(--shadow-soft);
+  }
+  .demo-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.7rem;
+    background: var(--color-sabbia);
+    border-bottom: 1px solid var(--color-pietra);
+  }
+  .demo-bar i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-pietra);
+  }
+  .demo-bar span {
+    flex: 1;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.7rem;
+    border-radius: 99px;
+    background: var(--color-crema);
+    color: var(--color-muschio);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+  }
+  .demo-phone {
+    border-radius: 2.2rem;
+    border: 0.55rem solid var(--color-abete-scuro);
+    box-shadow: var(--shadow-device);
+    background: var(--color-abete-scuro);
+  }
+  .demo-screen {
+    position: relative;
+  }
+  .demo-notch {
+    position: absolute;
+    z-index: 2;
+    top: 0.45rem;
+    left: 50%;
+    width: 28%;
+    height: 0.9rem;
+    transform: translateX(-50%);
+    border-radius: 99px;
+    background: var(--color-abete-scuro);
+  }
+  .demo-phone .demo {
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+
+  .demo {
+    container-type: inline-size;
+    background: var(--db);
+    color: var(--di);
+    font-family: var(--font-body);
+    line-height: 1.25;
+    text-align: left;
+    user-select: none;
+    pointer-events: none;
+  }
+  .demo * {
+    box-sizing: border-box;
+  }
+  .demo b,
+  .demo i {
+    font-style: normal;
+  }
+  .demo svg .fp { fill: var(--dp); }
+  .demo svg .fa { fill: var(--da); }
+  .demo svg .fs { fill: var(--ds); }
+  .demo svg .fi { fill: var(--di); }
+  .demo svg .fw { fill: var(--db); }
+  .demo svg .sp, .demo svg .sa, .demo svg .si { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .demo svg .sp { stroke: var(--dp); }
+  .demo svg .sa { stroke: var(--da); }
+  .demo svg .si { stroke: var(--di); }
+
+  /* Versione computer: pagina virtuale larga 1280 px → 1cqw = 12,8 px */
+  .demo-browser .demo {
+    aspect-ratio: 16 / 10.4;
+    overflow: hidden;
+  }
+  .demo-browser .d-nav {
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+    height: 7cqw;
+    padding: 0 4cqw;
+    background: var(--db);
+    border-bottom: 0.15cqw solid var(--ds);
+  }
+  .demo-browser .d-nav b { font-family: var(--font-display); font-weight: 400; font-size: 2.3cqw; color: var(--dp); white-space: nowrap; }
+  .demo-browser .d-links { display: flex; gap: 2.6cqw; margin-left: auto; font-size: 1.5cqw; }
+  .demo-browser .d-links i { white-space: nowrap; }
+  .demo-browser .d-nav > .d-btn { display: none; }
+  .demo-browser .d-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 3cqw; padding: 5cqw 4cqw 4cqw; }
+  .demo-browser .d-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 2cqw; }
+  .demo-browser .d-h { font-family: var(--font-display); font-size: 4.6cqw; line-height: 1.05; color: var(--dp); }
+  .demo-browser .d-p { font-size: 1.7cqw; line-height: 1.4; opacity: 0.85; }
+  .demo-browser .d-btn { display: inline-block; padding: 1.2cqw 2.4cqw; border-radius: 1cqw; background: var(--dp); color: var(--db); font-weight: 700; font-size: 1.6cqw; white-space: nowrap; }
+  .demo-browser .d-btn-a { background: var(--da); color: var(--di); }
+  .demo-browser .d-art { width: 100%; height: auto; }
+  .demo-browser .d-blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2cqw; padding: 0 4cqw; }
+  .demo-browser .d-block { display: flex; flex-direction: column; gap: 0.6cqw; padding: 2cqw; border-radius: 1.4cqw; background: var(--ds); }
+  .demo-browser .d-block b { font-size: 1.8cqw; color: var(--dp); }
+  .demo-browser .d-block i { font-size: 1.35cqw; line-height: 1.35; }
+  .demo-browser .d-foot { margin-top: 3cqw; padding: 2cqw 4cqw; background: var(--dp); color: var(--db); font-size: 1.3cqw; }
+
+  /* Versione telefono: pagina virtuale larga 390 px → 1cqw = 3,9 px */
+  .demo-phone .demo { aspect-ratio: 9 / 18.6; }
+  .demo-phone .d-nav { display: flex; align-items: center; justify-content: space-between; gap: 3cqw; padding: 10cqw 5cqw 4cqw; background: var(--db); }
+  .demo-phone .d-nav b { font-family: var(--font-display); font-weight: 400; font-size: 5.4cqw; color: var(--dp); line-height: 1.1; }
+  .demo-phone .d-links { display: none; }
+  .demo-phone .d-nav > .d-btn { display: inline-block; padding: 2cqw 3.4cqw; border-radius: 2.2cqw; border: 0.5cqw solid var(--dp); color: var(--dp); font-weight: 700; font-size: 3.4cqw; }
+  .demo-phone .d-hero { display: flex; flex-direction: column-reverse; gap: 4cqw; padding: 2cqw 5cqw 5cqw; }
+  .demo-phone .d-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 3cqw; }
+  .demo-phone .d-h { font-family: var(--font-display); font-size: 9cqw; line-height: 1.08; color: var(--dp); }
+  .demo-phone .d-p { font-size: 4.2cqw; line-height: 1.4; opacity: 0.85; }
+  .demo-phone .d-btn-a { display: inline-block; padding: 3cqw 5.5cqw; border-radius: 2.6cqw; background: var(--da); color: var(--di); font-weight: 700; font-size: 4.2cqw; }
+  .demo-phone .d-art { width: 70%; height: auto; align-self: center; }
+  .demo-phone .d-blocks { display: flex; flex-direction: column; gap: 3cqw; padding: 0 5cqw; }
+  .demo-phone .d-block { display: flex; flex-direction: column; gap: 1cqw; padding: 4cqw; border-radius: 3.4cqw; background: var(--ds); }
+  .demo-phone .d-block b { font-size: 4.4cqw; color: var(--dp); }
+  .demo-phone .d-block i { font-size: 3.8cqw; line-height: 1.35; }
+  .demo-phone .d-foot { margin-top: 5cqw; padding: 5cqw; background: var(--dp); color: var(--db); font-size: 3.4cqw; }
+</style>

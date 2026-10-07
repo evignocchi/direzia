@@ -1,0 +1,45 @@
+{
+  "name": "direzia",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sito di Direzia: il tuo sito in 3 giorni, massimo 500 €.",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@axe-core/playwright": "^4.13.0",
+    "@cloudflare/workers-types": "^5.20261007.1",
+    "@eslint/js": "^10.0.1",
+    "@fontsource/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource/young-serif": "^5.3.0",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.6",
+    "chrome-launcher": "^1.2.2",
+    "eslint": "^10.12.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "lighthouse": "^13.5.0",
+    "opentype.js": "^2.0.0",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "wrangler": "^4.148.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && tsc -p functions/tsconfig.json && eslint .",
+    "lint": "eslint .",
+    "brand": "node scripts/brand-build.mjs",
+    "brand:contrast": "node scripts/brand-contrast.mjs",
+    "prelaunch": "node scripts/prelaunch.mjs",
+    "test:e2e": "playwright test",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "pages:dev": "npm run build && wrangler pages dev dist"
+  }
+}

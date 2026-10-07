@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { copy } from '../data/copy';
+import { company, phoneHref } from '../data/company';
+const c = copy.notFound;
+---
+
+<Base title={`${c.title} | ${company.brandName}`} noindex>
+  <div class="wrap grid min-h-[60vh] items-center gap-10 py-14 md:grid-cols-[1.1fr_0.9fr]">
+    <div>
+      <h1>{c.heading}</h1>
+      <p class="mt-4 max-w-md text-lg">{c.text}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/" class="btn btn-primary">{c.back}<Icon name="arrow" size={20} /></a>
+        <a href={phoneHref} class="btn btn-secondary"><Icon name="phone" size={20} /><span class="tabular">{company.phone.display}</span></a>
+      </div>
+    </div>
+    <div class="shape-d flex aspect-[5/4] items-center justify-center bg-abete" aria-hidden="true">
+      <span class="font-display text-8xl text-zafferano">404</span>
+    </div>
+  </div>
+</Base>

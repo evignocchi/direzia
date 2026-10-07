@@ -1,0 +1,53 @@
+---
+import Icon from '../Icon.astro';
+import { copy } from '../../data/copy';
+import { offer, includedGroups } from '../../data/offer';
+const c = copy.included;
+---
+
+<section id="incluso" class="section bg-crema" aria-labelledby="incluso-titolo">
+  <div class="wrap">
+    <div class="reveal max-w-2xl">
+      <h2 id="incluso-titolo">{c.heading}</h2>
+      <p class="mt-4 text-lg">{c.intro}</p>
+    </div>
+
+    <div class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+      {
+        includedGroups.map((g) => (
+          <div class="reveal">
+            <h3 class="border-b-2 border-abete pb-3 text-abete">{g.title}</h3>
+            <ul class="mt-5 space-y-5">
+              {offer.included
+                .filter((i) => i.group === g.id)
+                .map((i) => (
+                  <li class="flex gap-3">
+                    <Icon name="check" size={22} class="mt-0.5 shrink-0 text-abete" />
+                    <div>
+                      <p class="font-bold text-abete-scuro">{i.title}</p>
+                      <p class="mt-0.5 text-muschio">{i.text}</p>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="reveal mt-14 rounded-[var(--radius-lg)] bg-abete-chiaro p-6 md:p-8">
+      <h3 class="text-abete-scuro">{c.outOfScopeHeading}</h3>
+      <p class="mt-2 max-w-2xl">{c.outOfScopeIntro}</p>
+      <ul class="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+        {
+          offer.outOfScope.map((o) => (
+            <li class="flex gap-3">
+              <Icon name="arrow" size={20} class="mt-1 shrink-0 text-abete" />
+              {o}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

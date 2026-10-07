@@ -1,0 +1,72 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { copy } from '../data/copy';
+import { company, phoneHref } from '../data/company';
+---
+
+<header class="sticky top-0 z-40 border-b border-pietra bg-crema">
+  <div class="wrap flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
+    <a href="/" aria-label={`${company.brandName}, vai alla home`} class="shrink-0 rounded">
+      <Logo class="h-8 w-auto md:h-9" />
+    </a>
+
+    <nav aria-label="Principale" class="hidden items-center gap-7 lg:flex">
+      {copy.nav.map((item) => (
+        <a href={`/${item.href}`} class="font-bold text-abete no-underline hover:underline">{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={phoneHref} class="hidden items-center gap-2 font-bold text-abete no-underline hover:underline md:flex" data-cta="phone-header">
+        <Icon name="phone" size={20} />
+        <span class="tabular">{company.phone.display}</span>
+      </a>
+      <a href="/#contatti" class="btn btn-primary hidden !min-h-11 !px-5 !py-2 md:inline-flex" data-cta="request-header">{copy.cta.primary}</a>
+      <button
+        type="button"
+        id="menu-button"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-lg text-abete hover:bg-abete-chiaro lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-label="Apri il menu"
+      >
+        <Icon name="menu" size={26} class="menu-open" />
+        <Icon name="close" size={26} class="menu-close hidden" />
+      </button>
+    </div>
+  </div>
+
+  <noscript><style>#menu[hidden]{display:block!important}</style></noscript>
+  <div id="menu" hidden class="border-t border-pietra bg-crema lg:hidden">
+    <nav aria-label="Menu mobile" class="wrap flex flex-col py-3">
+      {copy.nav.map((item) => (
+        <a href={`/${item.href}`} class="border-b border-pietra py-3.5 text-lg font-bold text-abete no-underline">{item.label}</a>
+      ))}
+      <a href={phoneHref} class="flex items-center gap-2 py-3.5 text-lg font-bold text-abete no-underline">
+        <Icon name="phone" size={22} />
+        <span class="tabular">{company.phone.display}</span>
+      </a>
+      <a href="/#contatti" class="btn btn-primary mt-2">{copy.cta.primary}</a>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('menu-button');
+    var menu = document.getElementById('menu');
+    if (!btn || !menu) return;
+    function set(open) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu');
+      menu.hidden = !open;
+      btn.querySelector('.menu-open').classList.toggle('hidden', open);
+      btn.querySelector('.menu-close').classList.toggle('hidden', !open);
+    }
+    btn.addEventListener('click', function () { set(menu.hidden); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', function (m) { if (m.matches) set(false); });
+  })();
+</script>

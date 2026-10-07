@@ -1,0 +1,68 @@
+/*
+ * Design tokens di Direzia: UNICA fonte di verità per colori, font, raggi e ombre.
+ * Gli script del brand (scripts/brand-*.mjs) leggono questo file per generare logo, OG e banner.
+ * Nei componenti si usano solo le utility Tailwind derivate (bg-abete, text-inchiostro, font-display…).
+ */
+@theme {
+  /* Primario: verde abete (fiducia, territorio, "via libera") */
+  --color-abete: #1a4a37;
+  --color-abete-scuro: #0f2f23;
+  --color-abete-chiaro: #e3eee7;
+
+  /* Secondario: terracotta (calore, mestieri, evidenze rare) */
+  --color-terracotta: #a63f24;
+  --color-terracotta-chiaro: #f7e4dc;
+
+  /* Accento: zafferano, riservato ai pulsanti principali (CTA) */
+  --color-zafferano: #f5b21b;
+  --color-zafferano-scuro: #e0a010;
+
+  /* Neutri caldi */
+  --color-crema: #fbf7ee;
+  --color-sabbia: #f2ebdc;
+  --color-pietra: #ddd3bf;
+  --color-muschio: #5e5a4e;
+  --color-inchiostro: #1e2722;
+
+  /* Stati */
+  --color-ok: #1f7a4a;
+  --color-ok-chiaro: #e3f3ea;
+  --color-errore: #b42318;
+  --color-errore-chiaro: #fbeae8;
+  --color-attenzione: #8a5b00;
+  --color-attenzione-chiaro: #fff3d6;
+  --color-info: #1f5f8b;
+
+  /* Tipografia */
+  --font-display: 'Young Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Scala tipografica fluida (mobile-first, 375px → 1440px) */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.1875rem;
+  --text-xl: clamp(1.3rem, 1.15rem + 0.75vw, 1.6rem);
+  --text-2xl: clamp(1.65rem, 1.3rem + 1.6vw, 2.4rem);
+  --text-3xl: clamp(2rem, 1.4rem + 2.8vw, 3.4rem);
+  --text-4xl: clamp(2.35rem, 1.5rem + 4vw, 4.4rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+
+  /* Forme */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.375rem;
+  --radius-pill: 999px;
+
+  /* Ombre: sempre con offset e sfumatura morbida */
+  --shadow-soft: 0 1px 2px rgb(15 47 35 / 0.06), 0 8px 24px -8px rgb(15 47 35 / 0.16);
+  --shadow-lift: 0 2px 4px rgb(15 47 35 / 0.08), 0 18px 40px -12px rgb(15 47 35 / 0.28);
+  --shadow-device: 0 30px 60px -20px rgb(15 47 35 / 0.45), 0 10px 20px -10px rgb(15 47 35 / 0.25);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --container-page: 72rem;
+  --container-text: 42rem;
+}

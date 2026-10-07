@@ -1,0 +1,19 @@
+---
+import { copy } from '../../data/copy';
+---
+
+<section class="on-dark pattern-frecce bg-abete text-crema" aria-label="I nostri tre impegni">
+  <ul class="wrap grid divide-y divide-crema/20 py-2 md:grid-cols-3 md:divide-x md:divide-y-0 md:py-0">
+    {
+      copy.commitments.map((c) => (
+        <li class="grid grid-cols-[8.5rem_1fr] items-center gap-x-4 py-5 md:block md:px-8 md:py-9 md:first:pl-0 md:last:pr-0">
+          <p class="font-display text-3xl leading-none text-crema">
+            {c.value}
+            {c.unit && <span class="mt-1 block text-lg text-zafferano md:mt-0 md:ml-2 md:inline md:text-xl">{c.unit}</span>}
+          </p>
+          <p class="text-abete-chiaro md:mt-2">{c.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

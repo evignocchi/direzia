@@ -1,0 +1,9 @@
+---
+import { copy } from '../data/copy';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class:list={['badge-demo', className]} data-demo-badge>{copy.demo.label}</span>

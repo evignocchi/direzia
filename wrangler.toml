@@ -1,0 +1,7 @@
+# Cloudflare Pages: configurazione per `wrangler pages dev` e per il deploy.
+name = "direzia"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "./dist"
+
+# Le variabili pubbliche e i segreti si impostano dal pannello Cloudflare Pages (vedi .env.example).
+# Per lo sviluppo locale delle Functions crea un file `.dev.vars` con i valori dei segreti.
